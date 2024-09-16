@@ -1,13 +1,13 @@
 const transporter = require('../helpers/nodemailer')
 
-const registroUsuario = async(nombre, apellido, emailUsuario) => {
+const registroUsuario = async (emailUsuario) => {
   // send mail with defined transport object
   const info = await transporter.sendMail({
     from: `Bienvenido a nuestra pagina!!!👻" <${process.env.GMAIL_USER}>`, // sender address
-    to: `andresperlo5@gmail.com`, // list of receivers
+    to: emailUsuario, // list of receivers
     subject: "Bienvenido ✔", // Subject line
     html: `
-     <div>
+    <div>
         <div style='display: flex; justify-content: center;'>
             <img src="https://images.vexels.com/content/234933/preview/bienvenida-badge-banner-8aaee8.png" alt="">
         </div>
@@ -20,14 +20,14 @@ const registroUsuario = async(nombre, apellido, emailUsuario) => {
   });
 }
 
-const pagoProductosUsuario = async() => {
+const pagoProductosUsuario = async () => {
   // send mail with defined transport object
   const info = await transporter.sendMail({
     from: `Pago exitoso!!!👻" <${process.env.GMAIL_USER}>`, // sender address
     to: `andresperlo5@gmail.com`, // list of receivers
     subject: "Gracias por tu compra ✔", // Subject line
     html: `
-     <div>
+    <div>
         <div style='display: flex; justify-content: center;'>
             <img src="https://images.vexels.com/content/234933/preview/bienvenida-badge-banner-8aaee8.png" alt="">
         </div>
@@ -40,7 +40,7 @@ const pagoProductosUsuario = async() => {
   });
 }
 
-const recuperoContraseniaUsuario = async(token) => {
+const recuperoContraseniaUsuario = async (token) => {
   // send mail with defined transport object
   const info = await transporter.sendMail({
     from: `Pago exitoso!!!👻" <${process.env.GMAIL_USER}>`, // sender address

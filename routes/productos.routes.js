@@ -24,7 +24,7 @@ router.post('/agregarProductoFav/:idProducto', auth('usuario'), agregarProductoA
 router.post('/quitarProductoFav/:idProducto', auth('usuario'), borrarProductoFavoritos)
 
 
-router.post('/agregarImagen/:idProducto', multer.single('imagen'),agregarImagenProductoPorId)
+router.post('/agregarImagen/:idProducto', auth('admin'), multer.single('imagen'),agregarImagenProductoPorId)
 
 /* PUT - Editar */
 router.put('/:idProducto',

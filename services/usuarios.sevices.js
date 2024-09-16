@@ -8,22 +8,18 @@ const FavModel = require("../models/favoritos.schema")
 const nuevoUsuario = async (body) => {
   try {
     const usuarioExiste = await UsuarioModel.findOne({ nombreUsuario: body.nombreUsuario })
-
+    
     if (usuarioExiste) {
       return 400
     }
-
-    if (body.rol !== 'usuario' && body.rol !== 'admin') {
+    if (body.rol) {
       return 409
     }
-
-
 
     let salt = bcrypt.genSaltSync();
     body.contrasenia = bcrypt.hashSync(body.contrasenia, salt);
 
-
-    registroUsuario()
+    registroUsuario(body.emailUsuario)
     const usuario = new UsuarioModel(body)
     const carrito = new CarritoModel({idUsuario: usuario._id})
     const favoritos = new FavModel({idUsuario: usuario._id})

@@ -71,6 +71,9 @@ const eliminarProducto = async(idProducto) => {
 
 const agregarImagen = async(idProducto, file) => {
   const producto = await ProductModel.findOne({_id: idProducto})
+    if(file === undefined){
+      return 401
+    }  
   const resultado = await cloudinary.uploader.upload(file.path)
 
   producto.imagen = resultado.secure_url
