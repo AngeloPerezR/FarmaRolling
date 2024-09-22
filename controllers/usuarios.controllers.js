@@ -1,3 +1,4 @@
+const logger = require('../helpers/logger')
 const serviceUsuario = require('../services/usuarios.sevices')
 const { validationResult } = require('express-validator')
 
