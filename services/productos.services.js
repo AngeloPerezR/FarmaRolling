@@ -108,7 +108,7 @@ const quitarProducto = async (idUsuario, idProducto) => {
   const carrito = await CarritoModel.findOne({_id: usuario.idCarrito})
 
   const posicionProducto = carrito.productos.findIndex((prod) => prod._id.toString() === producto._id.toString())
-
+  console.log(posicionProducto)
   if(posicionProducto < 0){
     return {
       msg:'No se encontro el producto que buscas',

@@ -3,7 +3,8 @@ const express = require('express')
 const path = require('path')
 const cors = require('cors')
 const morgan = require('morgan')
-
+const swaggerUI = require('swagger-ui-express');
+const swaggerSpec = require('../swagger');
 class Server {
   constructor() {
     this.app = express()
@@ -28,6 +29,7 @@ class Server {
     this.app.use('/api/productos', require('../routes/productos.routes'))
     this.app.use('/api/usuarios', require('../routes/usuarios.routes'))
     this.app.use('/api/categorias', require('../routes/categorias.routes'))
+    this.app.use('/api-docs', swaggerUI.serve, swaggerUI.setup(swaggerSpec));
   }
 
   listen() {
