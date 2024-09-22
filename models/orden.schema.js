@@ -9,8 +9,17 @@ const OrdenSchema = new Schema({
     type: Array
   },
   fecha: {
-    type: Date,
+    type: String,
     required: true
+  },
+  linkDePago: {
+    type: String,
+    required: true
+  },
+  estadoDePago: {
+    type: String,
+    default: 'pendiente',
+    enum: ['pendiente', 'pagado', 'cancelado']
   }
 })
 

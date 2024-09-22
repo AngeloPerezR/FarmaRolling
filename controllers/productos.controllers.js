@@ -92,21 +92,21 @@ const buscarProductoPorTermino = async (req, res) => {
 
 const agregarProductoAlCarrito = async (req, res) => {
   try {
-    const result = await serviciosProductos.agregarProducto(req.idUsuario, req.params.idProducto)
+    const result = await serviciosProductos.agregarProductoCarrito(req.idUsuario, req.params.idProducto)
 
     if(result.statusCode === 200){
       res.status(200).json({msg: result.msg})
-    }else if(result.statusCode === 400){
-      res.status(400).json({msg: result.msg})
+    }else if(result.statusCode === 202){
+      res.status(202).json({msg: result.msg})
     }
   } catch (error) {
     console.log(error)
   }
 }
 
-const borrarProductoCarrito = async(req, res) => {
+const borrarProductoDelCarrito = async(req, res) => {
   try {
-    const result = await serviciosProductos.quitarProducto(req.idUsuario, req.params.idProducto)
+    const result = await serviciosProductos.quitarProductoCarrito(req.idUsuario, req.params.idProducto)
     if(result.statusCode === 200){
       res.status(200).json({msg: result.msg})
     }
@@ -146,8 +146,7 @@ const borrarProductoFavoritos = async(req, res) => {
 
 const mercadoPago = async (req, res) => {
   try {
-
-    const resultMp = await serviciosProductos.pagoConMP(req.body)
+    const resultMp = await serviciosProductos.pagoConMP(req.idUsuario)
     if(resultMp.statusCode === 200){
       res.status(200).json(resultMp.result.init_point)
     }
@@ -164,7 +163,7 @@ module.exports = {
   agregarImagenProductoPorId,
   buscarProductoPorTermino,
   agregarProductoAlCarrito,
-  borrarProductoCarrito,
+  borrarProductoDelCarrito,
   agregarProductoAlFavoritos,
   borrarProductoFavoritos,
   mercadoPago
