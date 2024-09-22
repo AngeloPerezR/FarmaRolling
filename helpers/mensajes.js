@@ -1,6 +1,6 @@
 const transporter = require('../helpers/nodemailer')
 
-const registroUsuario = async(nombre, apellido, emailUsuario) => {
+const registroUsuario = async (nombre, apellido, emailUsuario) => {
   // send mail with defined transport object
   const info = await transporter.sendMail({
     from: `Bienvenido a nuestra pagina!!!👻" <${process.env.GMAIL_USER}>`, // sender address
@@ -20,7 +20,7 @@ const registroUsuario = async(nombre, apellido, emailUsuario) => {
   });
 }
 
-const pagoProductosUsuario = async() => {
+const pagoProductosUsuario = async () => {
   // send mail with defined transport object
   const info = await transporter.sendMail({
     from: `Pago exitoso!!!👻" <${process.env.GMAIL_USER}>`, // sender address
@@ -40,22 +40,26 @@ const pagoProductosUsuario = async() => {
   });
 }
 
-const recuperoContraseniaUsuario = async(token) => {
+const recuperoContraseniaUsuario = async (emailUsuario, token) => {
   // send mail with defined transport object
   const info = await transporter.sendMail({
-    from: `Pago exitoso!!!👻" <${process.env.GMAIL_USER}>`, // sender address
-    to: `andresperlo5@gmail.com`, // list of receivers
-    subject: "Gracias por tu compra ✔", // Subject line
+    from: `FarmaRolling <${process.env.GMAIL_USER}>`, // sender address
+    to: emailUsuario, // list of receivers
+    subject: "Recupero de contraseña", // Subject line
     html: `
-     <div>
-        <div style='display: flex; justify-content: center;'>
-            <img src="https://images.vexels.com/content/234933/preview/bienvenida-badge-banner-8aaee8.png" alt="">
+      <div style='text-aligne: center;'>
+        <div>
+            <p>Hace click en el siguiente boton para cambiar tu contraseña!<p/>
         </div>
         
         <div>
-            <img src="https://www.shutterstock.com/image-photo/young-smiling-male-businessman-founder-600nw-2454061349.jpg" alt="" width="100%">
+              <button style="background-color: #4CAF50; color: #ffffff; padding: 5px 10px; border-radius: 5px; cursor: pointer;">
+                <a href="ejemploDeRutaFront/${token}">
+                  Cambiar contraseña
+                </a>
+              </button>        
         </div>
-    </div>
+      </div>
     `, // html body
   });
 }
