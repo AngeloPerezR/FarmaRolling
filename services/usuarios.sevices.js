@@ -1,7 +1,7 @@
 const UsuarioModel = require("../models/usuario.schema")
 const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
-const { registroUsuario } = require("../helpers/mensajes")
+const { registroUsuario, recuperoContraseniaUsuario } = require("../helpers/mensajes")
 const CarritoModel = require("../models/carrito.schema")
 const FavModel = require("../models/favoritos.schema")
 
@@ -13,7 +13,7 @@ const nuevoUsuario = async (body) => {
       return 400
     }
 
-    if (body.rol !== 'usuario' && body.rol !== 'admin') {
+    if (body.rol) {
       return 409
     }
 
@@ -70,8 +70,44 @@ const inicioSesion = async (body) => {
       return { code: 400 }
     }
 
+  } catch (error) {
+    console.log(error)
+  }
+}
 
+const emailRecuperoContraseña = async (body) =>{
+  try {
+    const usuarioExiste = await UsuarioModel.findOne({ emailUsuario: body.emailUsuario})
+    if (usuarioExiste) {
+      const payload = {
+        emailUsuario: body.emailUsuario
+      }
+      const token = jwt.sign(payload, process.env.JWT_SECRET, {expiresIn: '1h'})
+      usuarioExiste.tokenContrasenia = token
+      await usuarioExiste.save()
+      recuperoContraseniaUsuario(body.emailUsuario, token)
+    }
+    return {msg: 'Si el email corresponde a un usuario registrado deberias recibir un correo en tu casilla para reestablecer la contraseña'}
+  } catch (error) {
+    console.log(error)
+  }
+}
 
+const reestablecerContraseña = async (body, token) =>{
+  try {
+    const tokenDecodificado = jwt.verify(token, process.env.JWT_SECRET)
+    const result = await UsuarioModel.findOne({emailUsuario: tokenDecodificado.emailUsuario})
+
+    if(result.tokenContrasenia === token){
+      let salt = bcrypt.genSaltSync();
+      body.contrasenia = bcrypt.hashSync(body.contrasenia, salt);
+      result.contrasenia = body.contrasenia
+      result.tokenContrasenia = null
+      await result.save()
+      return {code: 200}
+    } else{
+      return {code: 400}
+    }
   } catch (error) {
     console.log(error)
   }
@@ -113,6 +149,8 @@ const bajaUsuarioLogica = async (idUsuario) => {
 module.exports = {
   nuevoUsuario,
   inicioSesion,
+  emailRecuperoContraseña,
+  reestablecerContraseña,
   obtenerTodosLosUsuarios,
   obtenerUnUsuario,
   bajaUsuarioFisica,

@@ -1,9 +1,11 @@
 const express = require('express')
+const router = express.Router()
 const { obtenerUnProductoPorIdOTodos, crearProducto, editarProductoPorId, eliminarProductoPorId, agregarImagenProductoPorId, buscarProductoPorTermino, agregarProductoAlCarrito, borrarProductoCarrito, agregarProductoAlFavoritos, borrarProductoFavoritos, mercadoPago } = require('../controllers/productos.controllers')
 const { check } = require('express-validator')
 const auth = require('../middlewares/auth')
 const multer = require('../middlewares/multer')
-const router = express.Router()
+const {validateFields} = require('../middlewares/validateFields')
+
 
 /**
  * @swagger
@@ -272,6 +274,7 @@ router.post('/', [
   check('nombre', 'campo NOMBRE vacio').not().isEmpty(),
   check('precio', 'campo PRECIO vacio').not().isEmpty(),
   check('descripcion', 'campo DESCRIPCION vacio').not().isEmpty(),
+  validateFields
 ], auth('admin'), crearProducto)
 
 router.post('/crearPago', mercadoPago)
@@ -617,6 +620,7 @@ router.put('/:idProducto',
     check('nombre', 'campo NOMBRE vacio').not().isEmpty(),
     check('precio', 'campo PRECIO vacio').not().isEmpty(),
     check('descripcion', 'campo DESCRIPCION vacio').not().isEmpty(),
+    validateFields
   ], auth('admin'), editarProductoPorId)
 
 /* DELETE  - Borrar */
