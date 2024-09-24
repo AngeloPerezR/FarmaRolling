@@ -63,8 +63,12 @@ const eliminarProducto = async (idProducto) => {
   }
 }
 
-const agregarImagen = async (idProducto, file) => {
-  const producto = await ProductModel.findOne({ _id: idProducto })
+
+const agregarImagen = async(idProducto, file) => {
+   if(file === undefined){
+      return 401
+    }  
+  const producto = await ProductModel.findOne({_id: idProducto})
   const resultado = await cloudinary.uploader.upload(file.path)
 
   producto.imagen = resultado.secure_url
@@ -110,7 +114,6 @@ const quitarProductoCarrito = async (idUsuario, idProducto) => {
   const carrito = await CarritoModel.findOne({ _id: usuario.idCarrito })
 
   const posicionProducto = carrito.productos.findIndex((prod) => prod._id.toString() === producto._id.toString())
-
   if (posicionProducto < 0) {
     return {
       msg: 'No se encontro el producto que buscas',
@@ -176,6 +179,7 @@ const quitarProductoFav = async (idUsuario, idProducto) => {
     statusCode: 200
   }
 }
+
 
 const pagoConMP = async (idCliente) => {
   try {

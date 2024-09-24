@@ -1,0 +1,3 @@
+[2024-09-18T23:52:57.640] [INFO] default - { nombreUsuario: 'Patricio', contrasenia: 'Asdf12345' }
+[2024-09-18T23:53:17.738] [INFO] default - { nombreUsuario: 'Patricio', contrasenia: 'Asdf12345' }
+[2024-09-18T23:54:00.347] [WARN] default - { nombreUsuario: 'Patricio', contrasenia: 'Asdf12345' }
