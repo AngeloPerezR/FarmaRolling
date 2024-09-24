@@ -480,7 +480,6 @@ router.post('/agregarProductoFav/:idProducto', auth('usuario'), agregarProductoA
  *         description: Error del servidor
  */
 router.post('/quitarProductoFav/:idProducto', auth('usuario'), borrarProductoFavoritos)
-
 /**
  * @swagger
  * /api/productos/agregarImagen/{idProducto}:
@@ -537,7 +536,7 @@ router.post('/quitarProductoFav/:idProducto', auth('usuario'), borrarProductoFav
  *                   type: string
  *                   example: "Error del servidor"
  */
-router.post('/agregarImagen/:idProducto', multer.single('imagen'),agregarImagenProductoPorId)
+router.post('/agregarImagen/:idProducto', auth('admin'), multer.single('imagen'),agregarImagenProductoPorId)
 
 /* PUT - Editar */
 /**

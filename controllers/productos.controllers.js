@@ -64,6 +64,8 @@ const agregarImagenProductoPorId = async(req, res) => {
     const resultado = await serviciosProductos.agregarImagen(req.params.idProducto, req.file)
     if(resultado === 200){
       return res.status(200).json({msg:'Se agrego la imagen correctamente'})
+    } else if (resultado === 401){
+      return res.status(401).json({msg: 'No recibimos la imagen'})
     }
     /* file - path - multer - cloudinary */
     /* c://user/destok/imagen.jpg - .jpg - file */

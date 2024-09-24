@@ -8,7 +8,9 @@ const registrarUsuario = async (req, res) => {
     if (result === 201) {
       res.status(201).json({ msg: 'Usuario registrado con exito' })
     }else if(result === 409){
-      res.status(409).json({msg:'Error al crear: Rol incorrecto. Solo se puede ser usuario o admin'})
+      res.status(409).json({msg:'Error al crear: Rol por defecto es "Usuario"'})
+    } else if(result === 400){
+      res.status(400).json({msg:'Error al crear: El usuario ya existe'})
     }
   } catch (error) {
         res.status(500).json(error)

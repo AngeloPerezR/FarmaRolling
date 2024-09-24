@@ -1,7 +1,13 @@
 const { Schema, model } = require('mongoose')
 
 const UsuarioSchema = new Schema({
-  nombreUsuario:{
+  nombreUsuario: {
+    type: String,
+    required: true,
+    unique: true,
+    trim: true
+  },
+  emailUsuario: {
     type: String,
     required: true,
     unique: true,
@@ -17,7 +23,7 @@ const UsuarioSchema = new Schema({
   contrasenia: {
     type: String,
     required: true,
-    trim:true
+    trim: true
   },
 
   tokenContrasenia : {
@@ -29,24 +35,24 @@ const UsuarioSchema = new Schema({
   rol: {
     type: String,
     default: 'usuario',
-    enum:['usuario', 'admin']
+    enum: ['usuario', 'admin']
   },
 
-  bloqueado:{
-    type:Boolean,
+  bloqueado: {
+    type: Boolean,
     default: false
   },
-  idCarrito:{
+  idCarrito: {
     type: String
   },
-  idFavoritos:{
-    type:String
+  idFavoritos: {
+    type: String
   },
 })
 
-UsuarioSchema.methods.toJSON = function(){
+UsuarioSchema.methods.toJSON = function () {
   const { contrasenia, __v, ...usuario } = this.toObject()
-  return usuario 
+  return usuario
 }
 
 const UsuarioModel = model('user', UsuarioSchema)

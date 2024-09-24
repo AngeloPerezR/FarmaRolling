@@ -8,6 +8,8 @@ const {validateFields} = require('../middlewares/validateFields')
 router.post('/', [
   check('nombreUsuario', 'Campo USUARIO esta vacio').not().isEmpty(),
   check('nombreUsuario', 'min:5 caracteres y max: 40 caracteres').isLength({min:5, max: 40}),
+  check('emailUsuario', 'CamFpo EMAIL esta vacio o en un formato incorrecto').isEmail(),
+  check('emailUsuario', 'min:5 caracteres y max: 40 caracteres').isLength({min:5, max: 40}),
   check('contrasenia', 'Campo CONTRASEÑA esta vacio').not().isEmpty(),
   check('contrasenia', 'min: 8 caracteres y max: 50 caracteres').isLength({min:8, max: 50}),
   validateFields
