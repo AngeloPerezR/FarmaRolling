@@ -1,6 +1,6 @@
 const express = require('express')
+const { obtenerUnProductoPorIdOTodos, crearProducto, editarProductoPorId, eliminarProductoPorId, agregarImagenProductoPorId, buscarProductoPorTermino, agregarProductoAlCarrito, borrarProductoDelCarrito, agregarProductoAlFavoritos, borrarProductoFavoritos, mercadoPago } = require('../controllers/productos.controllers')
 const router = express.Router()
-const { obtenerUnProductoPorIdOTodos, crearProducto, editarProductoPorId, eliminarProductoPorId, agregarImagenProductoPorId, buscarProductoPorTermino, agregarProductoAlCarrito, borrarProductoCarrito, agregarProductoAlFavoritos, borrarProductoFavoritos, mercadoPago } = require('../controllers/productos.controllers')
 const { check } = require('express-validator')
 const auth = require('../middlewares/auth')
 const multer = require('../middlewares/multer')
@@ -277,7 +277,7 @@ router.post('/', [
   validateFields
 ], auth('admin'), crearProducto)
 
-router.post('/crearPago', mercadoPago)
+router.post('/crearPago', auth('usuario'), mercadoPago)
 
 /**
  * @swagger

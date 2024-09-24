@@ -4,6 +4,7 @@ const UsuarioModel = require('../models/usuario.schema')
 const CarritoModel = require('../models/carrito.schema')
 const FavModel = require('../models/favoritos.schema')
 const { MercadoPagoConfig, Preference } = require('mercadopago')
+const OrdenModel = require('../models/orden.schema')
 
 const obtenerTodosLosProductos = async (limit, to) => {
   const [productos, cantidadTotal] = await Promise.all([
@@ -62,6 +63,7 @@ const eliminarProducto = async (idProducto) => {
   }
 }
 
+
 const agregarImagen = async(idProducto, file) => {
    if(file === undefined){
       return 401
@@ -75,30 +77,38 @@ const agregarImagen = async(idProducto, file) => {
   return 200
 }
 
-const agregarProducto = async (idUsuario, idProducto) => {
-  const usuario = await UsuarioModel.findById(idUsuario)
-  const producto = await ProductModel.findOne({ _id: idProducto })
-  const carrito = await CarritoModel.findOne({ _id: usuario.idCarrito })
+const agregarProductoCarrito = async (idUsuario, idProducto) => {
+  try {
+    const usuario = await UsuarioModel.findById(idUsuario)
+    const producto = await ProductModel.findOne({ _id: idProducto })
+    const carrito = await CarritoModel.findOne({ _id: usuario.idCarrito })
 
-  const productoExiste = carrito.productos.find((prod) => prod._id.toString() === producto._id.toString())
+    const productoExiste = carrito.productos.find((obj) => obj.producto._id.toString() === producto._id.toString())
 
-  if (productoExiste) {
-    return {
-      msg: 'Producto ya existe en el carrito',
-      statusCode: 400
+    if (productoExiste) {
+      productoExiste.cantidad = productoExiste.cantidad + 1;
+      await CarritoModel.findByIdAndUpdate({ _id: carrito._id }, carrito, { new: true })
+      return {
+        msg: `Cantidad de producto ${productoExiste.cantidad}`,
+        statusCode: 202
+      }
+    } else {
+      let cantidad = 1
+      let productoCarrito = { cantidad, producto }
+      carrito.productos.push(productoCarrito)
+      await carrito.save()
+
+      return {
+        msg: 'Producto cargado correctamente en el carrito',
+        statusCode: 200
+      }
     }
-  }
-
-  carrito.productos.push(producto)
-  await carrito.save()
-
-  return {
-    msg: 'Producto cargado correctamente en el carrito',
-    statusCode: 200
+  } catch (error) {
+    console.log(error)
   }
 }
 
-const quitarProducto = async (idUsuario, idProducto) => {
+const quitarProductoCarrito = async (idUsuario, idProducto) => {
   const usuario = await UsuarioModel.findById(idUsuario)
   const producto = await ProductModel.findOne({ _id: idProducto })
   const carrito = await CarritoModel.findOne({ _id: usuario.idCarrito })
@@ -170,39 +180,44 @@ const quitarProductoFav = async (idUsuario, idProducto) => {
   }
 }
 
-const pagoConMP = async (body) => {
-  const client = new MercadoPagoConfig({ accessToken: process.env.MP_ACCESS_TOKEN })
-  const preference = new Preference(client)
-  const result = await preference.create({
-    body: {
-      items: [
-        {
-          title: 'cel 1',
-          quantity: 1,
-          unit_price: 150000,
-          currency_id: 'ARS'
+
+const pagoConMP = async (idCliente) => {
+  try {
+    const carrito = await CarritoModel.findOne({ idUsuario: idCliente })
+    const client = new MercadoPagoConfig({ accessToken: process.env.MP_TOKEN })
+    const preference = new Preference(client)
+    const compra = carrito.productos.map(obj => {
+      return {
+        title: obj.producto.nombre,
+        quantity: obj.cantidad,
+        unit_price: obj.producto.precio*obj.cantidad,
+        currency_id: 'ARS'
+      }
+    })
+    const result = await preference.create({
+      body: {
+        items: compra,
+        back_urls: {
+          success: 'myApp.netlify.com/carrito/success',
+          failure: 'myApp.netlify.com/carrito/failure',
+          pending: 'myApp.netlify.com/carrito/pending'
         },
-        {
-          title: 'cel 2',
-          quantity: 1,
-          unit_price: 150000,
-          currency_id: 'ARS'
-        },
-      ],
-      back_urls: {
-        success: 'myApp.netlify.com/carrito/success',
-        failure: 'myApp.netlify.com/carrito/failure',
-        pending: 'myApp.netlify.com/carrito/pending'
-      },
-      auto_return: 'approved'
+        auto_return: 'approved'
+      }
+    })
+
+    const fechaOrden = new Date().toString()
+    const orden = new OrdenModel({idCliente, productos: carrito.productos, fecha: fechaOrden, linkDePago: result.init_point})
+    carrito.productos = []
+    await orden.save()
+    await carrito.save()
+    return {
+      result,
+      statusCode: 200
     }
-  })
-
-  return {
-    result,
-    statusCode: 200
+  } catch (error) {
+    console.log(error)
   }
-
 }
 
 module.exports = {
@@ -213,8 +228,8 @@ module.exports = {
   eliminarProducto,
   agregarImagen,
   buscarProducto,
-  agregarProducto,
-  quitarProducto,
+  agregarProductoCarrito,
+  quitarProductoCarrito,
   agregarProductoFav,
   quitarProductoFav,
   pagoConMP
