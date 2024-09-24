@@ -13,10 +13,22 @@ const UsuarioSchema = new Schema({
     unique: true,
     trim: true
   },
+  emailUsuario: {
+    type: String,
+    required: true,
+    unique: true,
+    trim: true
+  },
 
   contrasenia: {
     type: String,
     required: true,
+    trim: true
+  },
+
+  tokenContrasenia : {
+    type: String,
+    default: null,
     trim: true
   },
 
