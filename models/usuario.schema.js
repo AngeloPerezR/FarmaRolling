@@ -7,12 +7,7 @@ const UsuarioSchema = new Schema({
     unique: true,
     trim: true
   },
-  emailUsuario: {
-    type: String,
-    required: true,
-    unique: true,
-    trim: true
-  },
+
   emailUsuario: {
     type: String,
     required: true,
@@ -42,9 +37,11 @@ const UsuarioSchema = new Schema({
     type: Boolean,
     default: false
   },
+
   idCarrito: {
     type: String
   },
+  
   idFavoritos: {
     type: String
   },

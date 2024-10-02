@@ -7,13 +7,13 @@ const registrarUsuario = async (req, res) => {
     const result = await serviceUsuario.nuevoUsuario(req.body)
     if (result === 201) {
       res.status(201).json({ msg: 'Usuario registrado con exito' })
-    }else if(result === 409){
-      res.status(409).json({msg:'Error al crear: Rol por defecto es "Usuario"'})
-    } else if(result === 400){
-      res.status(400).json({msg:'Error al crear: El usuario ya existe'})
+    } else if (result === 409) {
+      res.status(409).json({ msg: 'Error al crear: Rol por defecto es "Usuario"' })
+    } else if (result === 400) {
+      res.status(400).json({ msg: 'Error al crear: El usuario ya existe' })
     }
   } catch (error) {
-        res.status(500).json(error)
+    res.status(500).json(error)
   }
 }
 
@@ -27,27 +27,27 @@ const iniciarSesionUsuario = async (req, res) => {
       res.status(200).json({ msg: 'Usuario inicio sesion', token: result.token })
     }
   } catch (error) {
-        res.status(500).json(error)
+    res.status(500).json(error)
   }
 }
 
-const emailRecupero = async (req, res) =>{
+const emailRecupero = async (req, res) => {
   try {
-    const result = await serviceUsuario.emailRecuperoContraseña(req.body)    
+    const result = await serviceUsuario.emailRecuperoContraseña(req.body)
     res.status(200).json(result)
   } catch (error) {
     res.status(500).json(error)
   }
 }
 
-const recuperoContrasenia = async (req, res) =>{
+const recuperoContrasenia = async (req, res) => {
   try {
     const result = await serviceUsuario.reestablecerContraseña(req.body, req.query.token)
 
-    if(result.code === 200){
-      res.status(200).json({msg: 'Contraseña actualizada'})
-    } else{
-      res.status(400).json({msg: 'Hubo un problema con el cambio de contraseña, intente nuevamente'})
+    if (result.code === 200) {
+      res.status(200).json({ msg: 'Contraseña actualizada' })
+    } else {
+      res.status(400).json({ msg: 'Hubo un problema con el cambio de contraseña, intente nuevamente' })
     }
   } catch (error) {
     res.status(500).json(error)
@@ -59,27 +59,28 @@ const obtenerTodosLosUsuarios = async (req, res) => {
     const usuarios = await serviceUsuario.obtenerTodosLosUsuarios()
     res.status(200).json(usuarios)
   } catch (error) {
-        res.status(500).json(error)
+    res.status(500).json(error)
   }
 }
 
 const obtenerUnUsuario = async (req, res) => {
   try {
-  const usuario = await serviceUsuario.obtenerUnUsuario(req.params.idUsuario)
+    const usuario = await serviceUsuario.obtenerUnUsuario(req.params.idUsuario)
     res.status(200).json({ msg: 'Usuario encontrado', usuario })
   } catch (error) {
-        res.status(500).json(error)
+    res.status(500).json(error)
   }
 }
 
 const bajaFisicaUsuario = async (req, res) => {
   try {
-    const res = await serviceUsuario.bajaUsuarioFisica(req.params.idUsuario)
-    if (res === 200) {
+    const result = await serviceUsuario.bajaUsuarioFisica(req.params.idUsuario)
+    console.log(result)
+    if (result === 200) {
       res.status(200).json({ msg: 'Usuario borrado con exito' })
     }
   } catch (error) {
-        res.status(500).json(error)
+    res.status(500).json(error)
   }
 }
 
@@ -88,7 +89,7 @@ const bajaLogicaUsuario = async (req, res) => {
     const usuario = await serviceUsuario.bajaUsuarioLogica(req.params.idUsuario)
     res.status(200).json({ usuario })
   } catch (error) {
-        res.status(500).json(error)
+    res.status(500).json(error)
   }
 }
 
