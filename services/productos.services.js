@@ -5,6 +5,8 @@ const CarritoModel = require('../models/carrito.schema')
 const FavModel = require('../models/favoritos.schema')
 const { MercadoPagoConfig, Preference } = require('mercadopago')
 const OrdenModel = require('../models/orden.schema')
+const { envioDeOrdenDeCompra } = require('../helpers/mensajes')
+const { logger } = require('../helpers/nodemailer')
 
 const obtenerTodosLosProductos = async (limit, to) => {
   const [productos, cantidadTotal] = await Promise.all([
@@ -64,11 +66,11 @@ const eliminarProducto = async (idProducto) => {
 }
 
 
-const agregarImagen = async(idProducto, file) => {
-   if(file === undefined){
-      return 401
-    }  
-  const producto = await ProductModel.findOne({_id: idProducto})
+const agregarImagen = async (idProducto, file) => {
+  if (file === undefined) {
+    return 401
+  }
+  const producto = await ProductModel.findOne({ _id: idProducto })
   const resultado = await cloudinary.uploader.upload(file.path)
 
   producto.imagen = resultado.secure_url
@@ -183,14 +185,15 @@ const quitarProductoFav = async (idUsuario, idProducto) => {
 
 const pagoConMP = async (idCliente) => {
   try {
+    const cliente = await UsuarioModel.findOne({ _id: idCliente })
     const carrito = await CarritoModel.findOne({ idUsuario: idCliente })
-    const client = new MercadoPagoConfig({ accessToken: process.env.MP_TOKEN })
-    const preference = new Preference(client)
+    const clienteMP = new MercadoPagoConfig({ accessToken: process.env.MP_TOKEN })
+    const preference = new Preference(clienteMP)
     const compra = carrito.productos.map(obj => {
       return {
         title: obj.producto.nombre,
         quantity: obj.cantidad,
-        unit_price: obj.producto.precio*obj.cantidad,
+        unit_price: obj.producto.precio * obj.cantidad,
         currency_id: 'ARS'
       }
     })
@@ -207,8 +210,10 @@ const pagoConMP = async (idCliente) => {
     })
 
     const fechaOrden = new Date().toString()
-    const orden = new OrdenModel({idCliente, productos: carrito.productos, fecha: fechaOrden, linkDePago: result.init_point})
+    const orden = new OrdenModel({ idCliente, productos: carrito.productos, fecha: fechaOrden, linkDePago: result.init_point })
     carrito.productos = []
+    logger.info(result.init_point)
+    envioDeOrdenDeCompra(cliente.emailUsuario, result.init_point)
     await orden.save()
     await carrito.save()
     return {
