@@ -23,6 +23,8 @@ const iniciarSesionUsuario = async (req, res) => {
 
     if (result.code === 400) {
       res.status(400).json({ msg: 'Usuario y/o contraseña incorrecto' })
+    } else if(result.code === 401){
+      res.status(401).json({msg: 'Usuario bloqueado, comunicate con un administrador'})
     } else {
       res.status(200).json({ msg: 'Usuario inicio sesion', token: result.token })
     }

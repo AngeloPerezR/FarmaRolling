@@ -171,7 +171,7 @@ router.post('/', [
  *                  type: string
  *                  example: "oasndfajasndf123kljasndf123njdfasdfn3123msdf"
  *      400:
- *        description: El usuario ya existe
+ *        description: Usuario o contraseña incorrecto
  *        content:
  *          application/json:
  *            schema:
@@ -180,6 +180,16 @@ router.post('/', [
  *                msg:
  *                  type: string
  *                  example: "Usuario y/o contraseña incorrecto"
+ *      401:
+ *        description: Usuario bloqueado
+ *        content:
+ *          application/json:
+ *            schema:
+ *              type: object
+ *              properties:
+ *                msg:
+ *                  type: string
+ *                  example: "Usuario bloqueado, comunicate con un administrador"
  *      500:
  *        description: "Error del servidor"
  */

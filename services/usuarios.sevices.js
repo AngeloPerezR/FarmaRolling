@@ -46,6 +46,10 @@ const inicioSesion = async (body) => {
       return { code: 400 }
     }
 
+    if(usuarioExiste.bloqueado === true){
+      return { code: 401 }
+    }
+
     const verificacionContrasenia = bcrypt.compareSync(body.contrasenia, usuarioExiste.contrasenia)
 
     if (verificacionContrasenia) {
@@ -129,6 +133,9 @@ const obtenerUnUsuario = async (idUsuario) => {
 
 const bajaUsuarioFisica = async (idUsuario) => {
   try {
+    const usuario = await UsuarioModel.findOne({_id: idUsuario})
+    await FavModel.findByIdAndDelete({_id: usuario.idFavoritos})
+    await CarritoModel.findByIdAndDelete({_id: usuario.idCarrito})
     await UsuarioModel.findByIdAndDelete({ _id: idUsuario })
     return 200
   } catch (error) {
