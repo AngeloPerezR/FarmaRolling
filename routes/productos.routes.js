@@ -279,19 +279,12 @@ router.post('/', [
 
 /**
  * @swagger
- * /api/pagos/crearPago:
+ * /api/productos/crearPago:
  *   post:
  *     summary: Crea un pago con Mercado Pago basado en el carrito del usuario.
  *     tags: [Pagos]
  *     security:
  *       - authHeader: []
- *     parameters:
- *       - in: header
- *         name: Authorization
- *         schema:
- *           type: string
- *         required: true
- *         description: Token de autorización para validar la autenticación del usuario.
  *     responses:
  *       200:
  *         description: Pago creado exitosamente con Mercado Pago.
