@@ -277,6 +277,54 @@ router.post('/', [
   validateFields
 ], auth('admin'), crearProducto)
 
+/**
+ * @swagger
+ * /api/productos/crearPago:
+ *   post:
+ *     summary: Crea un pago con Mercado Pago basado en el carrito del usuario.
+ *     tags: [Pagos]
+ *     security:
+ *       - authHeader: []
+ *     responses:
+ *       200:
+ *         description: Pago creado exitosamente con Mercado Pago.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: string
+ *               example: "https://www.mercadopago.com/checkout/v1/redirect?preference-id=123456789"
+ *       400:
+ *         description: Error en la solicitud (por ejemplo, carrito vacío o ID de usuario no válido).
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 msg:
+ *                   type: string
+ *                   example: "Carrito vacío o no se pudo procesar el pago."
+ *       401:
+ *         description: Error de autenticación de acceso.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 msg:
+ *                   type: string
+ *                   example: "No tenes acceso"
+ *       500:
+ *         description: Error del servidor durante el procesamiento del pago.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 msg:
+ *                   type: string
+ *                   example: "Error en el servidor al intentar crear el pago."
+ */
+
 router.post('/crearPago', auth('usuario'), mercadoPago)
 
 /**
