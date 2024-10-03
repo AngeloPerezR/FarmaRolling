@@ -2,7 +2,6 @@ const transporter = require('../helpers/nodemailer')
 
 
 const registroUsuario = async (emailUsuario) => {
-  // send mail with defined transport object
   const info = await transporter.sendMail({
     from: `Bienvenido a nuestra pagina!!!👻" <${process.env.GMAIL_USER}>`, // sender address
     to: emailUsuario, // list of receivers
@@ -17,33 +16,12 @@ const registroUsuario = async (emailUsuario) => {
             <img src="https://www.shutterstock.com/image-photo/young-smiling-male-businessman-founder-600nw-2454061349.jpg" alt="" width="100%">
         </div>
     </div>
-    `, // html body
-  });
-}
-
-const pagoProductosUsuario = async () => {
-  // send mail with defined transport object
-  const info = await transporter.sendMail({
-    from: `Pago exitoso!!!👻" <${process.env.GMAIL_USER}>`, // sender address
-    to: `andresperlo5@gmail.com`, // list of receivers
-    subject: "Gracias por tu compra ✔", // Subject line
-    html: `
-    <div>
-        <div style='display: flex; justify-content: center;'>
-            <img src="https://images.vexels.com/content/234933/preview/bienvenida-badge-banner-8aaee8.png" alt="">
-        </div>
-        
-        <div>
-            <img src="https://www.shutterstock.com/image-photo/young-smiling-male-businessman-founder-600nw-2454061349.jpg" alt="" width="100%">
-        </div>
-    </div>
-    `, // html body
+    `,
   });
 }
 
 
 const recuperoContraseniaUsuario = async (emailUsuario, token) => {
-  // send mail with defined transport object
   const info = await transporter.sendMail({
     from: `FarmaRolling <${process.env.GMAIL_USER}>`, // sender address
     to: emailUsuario, // list of receivers
@@ -62,12 +40,35 @@ const recuperoContraseniaUsuario = async (emailUsuario, token) => {
               </button>        
         </div>
       </div>
-    `, // html body
+    `,
+  });
+}
+
+const envioDeOrdenDeCompra = async (emailUsuario, linkDePago) => {
+  const info = await transporter.sendMail({
+    from: `FarmaRolling <${process.env.GMAIL_USER}>`, // sender address
+    to: emailUsuario, // list of receivers
+    subject: "Orden de compra", // Subject line
+    html: `
+      <div style='text-aligne: center;'>
+        <div>
+            <p>Muchas gracias por tu compra!! Hace click en el siguiente enlace para realizar el pago!!<p/>
+        </div>
+        
+        <div>
+              <button style="background-color: #4CAF50; color: #ffffff; padding: 5px 10px; border-radius: 5px; cursor: pointer;">
+                <a href="${linkDePago}">
+                  Finalizar compra
+                </a>
+              </button>        
+        </div>
+      </div>
+    `,
   });
 }
 
 module.exports = {
   registroUsuario,
-  pagoProductosUsuario,
-  recuperoContraseniaUsuario
+  recuperoContraseniaUsuario,
+  envioDeOrdenDeCompra
 }

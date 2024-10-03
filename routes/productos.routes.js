@@ -378,7 +378,7 @@ router.post('/agregarProductoCarrito/:idProducto', auth('usuario'), agregarProdu
  *       500:
  *         description: Error del servidor
  */
-router.post('/quitarProductoCarrito/:idProducto', auth('usuario'), borrarProductoCarrito)
+router.post('/quitarProductoCarrito/:idProducto', auth('usuario'), borrarProductoDelCarrito)
 
 /**
  * @swagger
