@@ -353,8 +353,8 @@ router.post('/crearPago', auth('usuario'), mercadoPago)
  *                 msg:
  *                   type: string
  *                   example: "Producto cargado correctamente en el carrito"
- *       400:
- *         description: El producto ya existe en el carrito o hubo un error en la solicitud
+ *       202:
+ *         description: El producto ya existe en el carrito asi que se suma uno en cantidad
  *         content:
  *           application/json:
  *             schema:
@@ -362,7 +362,7 @@ router.post('/crearPago', auth('usuario'), mercadoPago)
  *               properties:
  *                 msg:
  *                   type: string
- *                   example: "Producto ya existe en el carrito"
+ *                   example: "Se aumento la cantidad del producto"
  *       401:
  *         description: Error de autenticación de acceso
  *         content:
@@ -403,6 +403,16 @@ router.post('/agregarProductoCarrito/:idProducto', auth('usuario'), agregarProdu
  *                 msg:
  *                   type: string
  *                   example: "Producto eliminado correctamente del carrito"
+ *       202:
+ *         description: Se elimina una unidad del producto que se encuentra en el carrito
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 msg:
+ *                   type: string
+ *                   example: "Se redujo una unidad del producto seleccionado"
  *       400:
  *         description: El producto no se encontró en el carrito o hubo un error en la solicitud
  *         content:
@@ -432,7 +442,7 @@ router.post('/quitarProductoCarrito/:idProducto', auth('usuario'), borrarProduct
  * @swagger
  * /api/productos/agregarProductoFav/{idProducto}:
  *   post:
- *     summary: Agregar un producto al carrito a productos favoritos
+ *     summary: Agregar un producto a favoritos
  *     tags: [Favoritos]
  *     security:
  *       - authHeader: []

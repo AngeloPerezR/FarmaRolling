@@ -106,7 +106,9 @@ const borrarProductoDelCarrito = async(req, res) => {
     if(result.statusCode === 200){
       res.status(200).json({msg: result.msg})
     }
-    else if(result.statusCode === 400){
+    else if(result.statusCode === 202){
+      res.status(202).json({msg: result.msg})
+    } else{
       res.status(400).json({msg: result.msg})
     }
 

@@ -1,3 +1,115 @@
 [2024-09-18T23:52:57.640] [INFO] default - { nombreUsuario: 'Patricio', contrasenia: 'Asdf12345' }
 [2024-09-18T23:53:17.738] [INFO] default - { nombreUsuario: 'Patricio', contrasenia: 'Asdf12345' }
 [2024-09-18T23:54:00.347] [WARN] default - { nombreUsuario: 'Patricio', contrasenia: 'Asdf12345' }
+[2024-10-03T11:30:25.904] [INFO] default - https://www.mercadopago.com.ar/checkout/v1/redirect?pref_id=1998632299-f7c13f2f-3a31-4295-badf-824deb999e7b
+[2024-10-03T11:44:13.956] [ERROR] default - TypeError: Cannot read properties of undefined (reading 'toString')
+    at C:\Users\patob\OneDrive\Documentos\GitHub\FarmaRolling\services\productos.services.js:135:77
+    at Proxy.findIndex (<anonymous>)
+    at Object.quitarProductoCarrito (C:\Users\patob\OneDrive\Documentos\GitHub\FarmaRolling\services\productos.services.js:135:48)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async borrarProductoDelCarrito (C:\Users\patob\OneDrive\Documentos\GitHub\FarmaRolling\controllers\productos.controllers.js:105:20)
+[2024-10-03T11:44:21.733] [ERROR] default - TypeError: Cannot read properties of undefined (reading 'toString')
+    at C:\Users\patob\OneDrive\Documentos\GitHub\FarmaRolling\services\productos.services.js:135:77
+    at Proxy.findIndex (<anonymous>)
+    at Object.quitarProductoCarrito (C:\Users\patob\OneDrive\Documentos\GitHub\FarmaRolling\services\productos.services.js:135:48)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async borrarProductoDelCarrito (C:\Users\patob\OneDrive\Documentos\GitHub\FarmaRolling\controllers\productos.controllers.js:105:20)
+[2024-10-03T11:45:07.264] [ERROR] default - TypeError: Cannot read properties of undefined (reading 'toString')
+    at C:\Users\patob\OneDrive\Documentos\GitHub\FarmaRolling\services\productos.services.js:135:77
+    at Proxy.findIndex (<anonymous>)
+    at Object.quitarProductoCarrito (C:\Users\patob\OneDrive\Documentos\GitHub\FarmaRolling\services\productos.services.js:135:48)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async borrarProductoDelCarrito (C:\Users\patob\OneDrive\Documentos\GitHub\FarmaRolling\controllers\productos.controllers.js:105:20)
+[2024-10-03T11:50:46.319] [INFO] default - {
+  cantidad: 2,
+  producto: {
+    _id: new ObjectId('66e6481fd9e6c83c56d6c792'),
+    nombre: 'Crema para Quemaduras',
+    descripcion: 'Crema para el cuidado de quemaduras leves y solares',
+    precio: 5.75,
+    activo: true,
+    imagen: '',
+    __v: 0
+  }
+}
+[2024-10-03T11:51:09.222] [INFO] default - undefined
+[2024-10-03T12:07:07.767] [INFO] default - {
+  cantidad: 2,
+  producto: {
+    _id: new ObjectId('66e6481fd9e6c83c56d6c792'),
+    nombre: 'Crema para Quemaduras',
+    descripcion: 'Crema para el cuidado de quemaduras leves y solares',
+    precio: 5.75,
+    activo: true,
+    imagen: '',
+    __v: 0
+  }
+}
+[2024-10-03T12:07:35.229] [INFO] default - {
+  cantidad: 1,
+  producto: {
+    _id: new ObjectId('66e6481fd9e6c83c56d6c792'),
+    nombre: 'Crema para Quemaduras',
+    descripcion: 'Crema para el cuidado de quemaduras leves y solares',
+    precio: 5.75,
+    activo: true,
+    imagen: '',
+    __v: 0
+  }
+}
+[2024-10-03T12:08:02.302] [INFO] default - {
+  cantidad: 1,
+  producto: {
+    _id: new ObjectId('66e6481fd9e6c83c56d6c792'),
+    nombre: 'Crema para Quemaduras',
+    descripcion: 'Crema para el cuidado de quemaduras leves y solares',
+    precio: 5.75,
+    activo: true,
+    imagen: '',
+    __v: 0
+  }
+}
+[2024-10-03T12:10:47.626] [INFO] default - {
+  cantidad: 2,
+  producto: {
+    _id: new ObjectId('66e6481fd9e6c83c56d6c78a'),
+    nombre: 'Ibuprofeno 400mg',
+    descripcion: 'Antiinflamatorio no esteroideo para molestias y dolores musculares',
+    precio: 5.49,
+    activo: true,
+    imagen: '',
+    __v: 0
+  }
+}
+[2024-10-03T12:11:12.560] [INFO] default - {
+  cantidad: 1,
+  producto: {
+    _id: new ObjectId('66e6481fd9e6c83c56d6c78a'),
+    nombre: 'Ibuprofeno 400mg',
+    descripcion: 'Antiinflamatorio no esteroideo para molestias y dolores musculares',
+    precio: 5.49,
+    activo: true,
+    imagen: '',
+    __v: 0
+  }
+}
+[2024-10-03T12:11:56.246] [INFO] default - {
+  cantidad: 1,
+  producto: {
+    _id: new ObjectId('66e6481fd9e6c83c56d6c78a'),
+    nombre: 'Ibuprofeno 400mg',
+    descripcion: 'Antiinflamatorio no esteroideo para molestias y dolores musculares',
+    precio: 5.49,
+    activo: true,
+    imagen: '',
+    __v: 0
+  }
+}
+[2024-10-03T12:17:55.182] [ERROR] default - ReferenceError: posicionProducto is not defined
+    at Object.quitarProductoCarrito (C:\Users\patob\OneDrive\Documentos\GitHub\FarmaRolling\services\productos.services.js:136:17)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async borrarProductoDelCarrito (C:\Users\patob\OneDrive\Documentos\GitHub\FarmaRolling\controllers\productos.controllers.js:105:20)
+[2024-10-03T12:20:01.699] [ERROR] default - ReferenceError: posicionProducto is not defined
+    at Object.quitarProductoCarrito (C:\Users\patob\OneDrive\Documentos\GitHub\FarmaRolling\services\productos.services.js:146:67)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async borrarProductoDelCarrito (C:\Users\patob\OneDrive\Documentos\GitHub\FarmaRolling\controllers\productos.controllers.js:105:20)

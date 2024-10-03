@@ -369,6 +369,16 @@ router.post('/recuperoContrasenia', [
  *                 msg:
  *                   type: string
  *                   example: "No tenes acceso"
+ *       409:
+ *        description: No llego el token con la petición
+ *        content:
+ *          application/json:
+ *            schema:
+ *              type: object
+ *              properties:
+ *                msg:
+ *                  type: string
+ *                  example: "No tenes acceso"
  *       500:
  *         description: Error del servidor
  */
@@ -428,6 +438,16 @@ router.get('/', auth('admin'), obtenerTodosLosUsuarios)
  *                msg:
  *                  type: string
  *                  example: "No tenes acceso"
+ *      409:
+ *        description: No llego el token con la petición
+ *        content:
+ *          application/json:
+ *            schema:
+ *              type: object
+ *              properties:
+ *                msg:
+ *                  type: string
+ *                  example: "No tenes acceso"
  *      500:
  *        description: "Error del servidor"
  */
@@ -472,6 +492,16 @@ router.get('/:idUsuario', auth('admin'), obtenerUnUsuario)
  *                 msg:
  *                   type: string
  *                   example: "No tenes acceso"
+ *       409:
+ *        description: No llego el token con la petición
+ *        content:
+ *          application/json:
+ *            schema:
+ *              type: object
+ *              properties:
+ *                msg:
+ *                  type: string
+ *                  example: "No tenes acceso"
  *       500:
  *         description: Error del servidor
  *         content:
@@ -524,6 +554,16 @@ router.delete('/:idUsuario', auth('admin'), bajaFisicaUsuario)
  *                 msg:
  *                   type: string
  *                   example: "No tenes acceso"
+ *       409:
+ *        description: No llego el token con la petición
+ *        content:
+ *          application/json:
+ *            schema:
+ *              type: object
+ *              properties:
+ *                msg:
+ *                  type: string
+ *                  example: "No tenes acceso"
  *       500:
  *         description: Error del servidor
  *         content:
