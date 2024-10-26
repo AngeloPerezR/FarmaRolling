@@ -21,7 +21,7 @@ Este proyecto es un servidor backend para una plataforma de ecommerce construido
 3. **Carrito de Compras y Órdenes:**
    - Agregar, actualizar y eliminar productos del carrito
    - Gestión y registro de órdenes en la base de datos
-   - Envío de confirmaciones de órdenes por correo electrónico y WhatsApp
+   - Envío de confirmaciones de órdenes por correo electrónico.
 
 4. **Integración de Pagos:**
    - Integración de MercadoPago para la gestión de pagos
